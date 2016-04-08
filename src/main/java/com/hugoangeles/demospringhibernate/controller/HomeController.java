@@ -23,8 +23,14 @@
  */
 package com.hugoangeles.demospringhibernate.controller;
 
+import com.hugoangeles.demospringhibernate.entity.Contact;
+import com.hugoangeles.demospringhibernate.service.ContactService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 /**
  *
@@ -33,19 +39,46 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class HomeController {
     
+    @Autowired
+    private ContactService contactService;
+    
     @RequestMapping("/")
     public String index(){
         return "index";
     }
     
-    @RequestMapping("/new")
+    @RequestMapping(value = "/new", method = RequestMethod.GET)
     public String newContact(){
         return "new";
     }
     
+    @RequestMapping(value = "/new", method = RequestMethod.POST)
+    public ModelAndView saveContact(@RequestParam("firstname") String firstname,
+                                    @RequestParam("lastname") String lastname,
+                                    @RequestParam("email") String email,
+                                    @RequestParam("telephone") String telephone
+    ) {
+        ModelAndView mv = new ModelAndView("new");
+        Contact contact = new Contact();
+        contact.setFirstname(firstname);
+        contact.setLastname(lastname);
+        contact.setEmail(email);
+        contact.setTelephone(telephone);
+        
+        try {
+            contactService.save(contact);
+            mv.addObject("msg", "Contact saved");
+        } catch (Exception e) {
+            mv.addObject("msg", "An error occurred");
+        }
+        return mv;
+    }
+    
     @RequestMapping("/list")
-    public String list(){
-        return "list";
+    public ModelAndView list(){
+        ModelAndView mv = new ModelAndView("list");
+        mv.addObject("contacts", contactService.listAll());
+        return mv;
     }
     
 }

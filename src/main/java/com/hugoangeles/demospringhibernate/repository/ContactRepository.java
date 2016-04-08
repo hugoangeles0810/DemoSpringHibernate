@@ -34,7 +34,7 @@ public interface ContactRepository {
     
     public void save(Contact contact);
     public void update(Contact contact);
-    public List<Contact> listAll(Contact contact);
+    public List<Contact> listAll();
     public void delete(Contact contact);
     
 }

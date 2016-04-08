@@ -48,8 +48,8 @@ public class ContactServiceImpl implements ContactService{
         contactRepository.update(contact);
     }
 
-    public List<Contact> listAll(Contact contact) {
-        return contactRepository.listAll(contact);
+    public List<Contact> listAll() {
+        return contactRepository.listAll();
     }
 
     public void delete(Contact contact) {

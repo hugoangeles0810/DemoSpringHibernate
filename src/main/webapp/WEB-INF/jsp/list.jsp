@@ -4,7 +4,9 @@
     Author     : Hugo
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<c:set var="cp" scope="application" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
     <head>
@@ -26,10 +28,17 @@
                     </tr>
                 </thead>
                 <tbody>
-                    
+                    <c:forEach var="contact" items="${contacts}">
+                        <tr>
+                            <td>${contact.firstname}</td>
+                            <td>${contact.lastname}</td>
+                            <td>${contact.email}</td>
+                            <td>${contact.telephone}</td>
+                        </tr>
+                    </c:forEach>
                 </tbody>
             </table>
-            <a href="javascript: window.history.back();">Regresar</a>
+            <a href="${cp}">Regresar</a>
         </div>
         <script src="resources/js/jquery.min.js"></script>
         <script src="resources/js/materialize.min.js"></script>

@@ -52,7 +52,7 @@ public class ContactRepositoryImpl implements ContactRepository{
         getSession().update(contact);
     }
 
-    public List<Contact> listAll(Contact contact) {
+    public List<Contact> listAll() {
         Criteria criteria = getSession().createCriteria(Contact.class);
         return criteria.list();
     }
