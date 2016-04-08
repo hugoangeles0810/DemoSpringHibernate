@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+	 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	 xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
+	 version="3.1">
+    
+    <!-- Nombre a mostrar en el contexto -->
+    <display-name>DemoSpringHibernate</display-name>
+    
+    <!-- Se definen el parametro contextConfigLocation que luego sera leido por
+         el Cargador de Spring que definimos más abajo  -->
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>
+            /WEB-INF/applicationContext.xml
+        </param-value>
+    </context-param>
+    
+    <!-- Este listener leera el parametro contextConfigLocation que definimos arriba
+        para asi inicializar toda la configuración definida en el applicationContext.xml
+        como la creación de los datasource, configuracion de hibernate, etc  -->
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+    
+    <!-- Creamos el DispatcherServlet este recibira todas las peticiones y las delegara
+         al controller y/o recurso correspondiente   -->
+    <servlet>
+        <!-- el nombre es importante spring buscará el archivo [nombre]-servlet.xml
+             para inicializar la configuración del servlet -->
+        <servlet-name>dispatcher</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <load-on-startup>2</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <!-- Aqui definimos que peticiones reconocerá el dispatcher con el * 
+            se indica cualquier patrón pero tambien podrían restringirse a html 
+            con *.html o json con *.json, etc -->
+        <servlet-name>dispatcher</servlet-name>
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
+    
+    
+    <session-config>
+        <session-timeout>
+            30
+        </session-timeout>
+    </session-config>
+</web-app>
